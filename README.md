@@ -1,124 +1,136 @@
-### Introduction
-------------
-**FOS-Streaming** -- Free IPTV panel for streaming video content
+<?php
+include('config.php');
+if(isset($_SESSION['user_id'])){
+    header("location: dashboard.php");
+}
+
+$error='';
+if (isset($_POST['submit'])) {
+    if (empty($_POST['username']) || empty($_POST['password'])) {
+        $error = "Username or Password is invalid";
+    }
+    else
+    {
+        $username = stripslashes($_POST['username']);
+        $password = stripslashes($_POST['password']);
+
+        $userfind = Admin::where('username', '=', $username)->where('password', '=', md5($password))->count();
+
+        if ($userfind > 0) {
+            $_SESSION['user_id'] = $username;
+            header("location: dashboard.php");
+        } else {
+
+            $error = "Username or Password is invalid";
+
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FOS-Streaming panel by Tyfix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link id="base-style" href="css/style.css" rel="stylesheet">
+    <link id="base-style-responsive" href="css/style-responsive.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link id="ie-style" href="css/ie.css" rel="stylesheet">
+    <![endif]-->
+
+    <!--[if IE 9]>
+    <link id="ie9style" href="css/ie9.css" rel="stylesheet">
+    <![endif]-->
 
 
-This version will not be updated in the future.
-We have a new repository and version:
-https://github.com/zgelici/FOS-Streaming-v1
-
-#### New version
-
-https://github.com/zgelici/FOS-Streaming-v1
-
-#### Installation
-------------
-- login with a shell client(example putty.exe)
-```sh
-- wget http://tyfix.nl/fos/install.sh
-- chmod 755 install.sh
-- ./install.sh
-```
-- **[DATABASE]** Edit your config.php (Database connection)
-- **[DATABASE]** Create database tables
-- - Normal install (first install) URL: http://host/install.php?install
-- - Fresh install (clean database) URL: http://host/install.php?install=fresh
-- **[BACKEND]** Go to the website and login with username: admin and password: admin
-
-#### UPDATE(ONLY FOR EXISTS INSTALLATIONS)
-Login with a shell client
-```sh
-- wget http://tyfix.nl/fos/update1.sh
-- chmod 755 ./update1.sh
-- ./update1.sh
-```
-#### UPDATE DATABASE(ONLY FOR EXISTS INSTALLATIONS)
-Required to update database without losing data
-Go to the next urls: 
-- http://host/install.php?install (will add new tables)
-- http://host/install.php?update (updates your tables)
-
-#### Commercial rights
-------------
-- You may charge for installation, support and modification.
-- You may Any significant modifications must be sent back to the author (me), under Open Source agreement.
-- You may not Rename the plugin.
-- You may not sell this plugin to anyone.
-
-#### Contribution
-------------
-Contribution are always **welcome and recommended**! Here is how:
-
-- Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
-- Clone to your machine ```git clone https://github.com/YOUR_USERNAME/FOS-Streaming.git```
-- Make your changes
-- Create a pull request
-
-##### Contribution Requirements:
-
-- When you contribute, you agree to give a non-exclusive license to Tyfix to use that contribution in any context as we (Tyfix) see appropriate.
-- If you use content provided by another party, it must be appropriately licensed using an [open source](http://opensource.org/licenses) license.
-- Contributions are only accepted through Github pull requests.
-
-#### License
--------
-Fos-Streamining is an open source project by [Tyfix](https://tyfix.nl that is licensed under [MIT](http://opensource.org/licenses/MIT). Tyfix
-reserves the right to change the license of future releases.
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+        body { background: #eee }
+    </style>
+</head>
+<body>
+<div class="container-fluid-full">
+    <div class="row-fluid">
 
 
-#### Todo List
----------
--  [NEXT UPDATE] Mag devices
--  [NEXT UPDATE] Watermark
--  [NEXT UPDATE] UBUNTU (Streaming issue by some people) PHP?
-- Bandwidth monitoring
-- removal panel
-- users connected
-- GEO ip
-- Limit users
-- Monitoring
-- Settings (restart nginx)
-
-#### Issues
-----------
-- settings.php (HLS folder)
-- UBUNTU (Streaming issue by some people) PHP?
+        <div class="row-fluid">
 
 
-#### Change log
------------
-- *30-8-2015
-- [UPDATE] mass start/stop streams
-- [UPDATE] users (last viewed channel)
-- [UPDATE] backups stream url
-- *29-8-2015
-- [UPDATE] mass delete streams
-- [UPDATE] id based streams
-- [UPDATE] less secure streaming
-- [UPDATE] id based streams
-- [UPDATE] m3u and E2 (clients)
-- [UPDATE] Whoops page (debug)
-- [UPDATE] expire date
-- [UPDATE] Bulk playlist insert (m3u)
-- *28-8-2015
-- [UPDATE] [BETA] Transcoding
-- [UPDATE] Last ip connected
-- [UPDATE] Improved streaming
-- [UPDATE] h264_mp4toannexb
-- [UPDATE] AUTO INSTALL/UPDATE DATABASE
-- [UPDATE] Play stream
-- *23-8-2015
-- [UPDATE] [installation] auto set web ip
-- [UPDATE] Displaying warnings en errors (example: users add(create category first message, users view(no users, shows "add users" message)
-- [UPDATE] Settings (port change, change nginx config)
-- [UPDATE] install database
-- [BUG] getfile (m3u and tv fix)
-- [BUG] start stream( restream starts ffmpeg ) fixed
-- [BUG] Stream.php (Enigma2) fixed
+            <div class="login-box">
+                <div class="box span12">
+                    <?php
+                        if($error != "") {
+                            echo "<div class=\"alert alert-error\">
+                                    " . $error . "
+                                </div>";
+                        }
+                    ?>
+                    <h1><b>FOS-Streaming panel</b></h1>
+                </div>
 
+                <h2>Login to your account</h2>
+                <form class="form-horizontal" action="" method="post">
 
-Donations are **greatly appreciated!**
+                    <fieldset>
 
-[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Tyfix ")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6ATJFKYPFY65W "Donate")
+                        <div class="input-prepend" title="Username">
+                            <span class="add-on"><i class="halflings-icon user"></i></span>
+                            <input class="input-large span10" name="username" id="username" type="text" placeholder="type username"/>
+                        </div>
+                        <div class="clearfix"></div>
 
+                        <div class="input-prepend" title="Password">
+                            <span class="add-on"><i class="halflings-icon lock"></i></span>
+                            <input class="input-large span10" name="password" id="password" type="password" placeholder="type password"/>
+                        </div>
+                        <div class="clearfix"></div>
 
+                        <div class="button-login">
+                            <button type="submit" name="submit" class="btn btn-primary">Login</button>
+                        </div>
+                        <div class="clearfix"></div>
+                </form>
+            </div><!--/span-->
+        </div><!--/row-->
+    </div>
+</div>
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery-migrate-1.0.0.min.js"></script>
+<script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+<script src="js/jquery.ui.touch-punch.js"></script>
+<script src="js/modernizr.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src='js/fullcalendar.min.js'></script>
+<script src='js/jquery.dataTables.min.js'></script>
+<script src="js/excanvas.js"></script>
+<script src="js/jquery.flot.js"></script>
+<script src="js/jquery.flot.pie.js"></script>
+<script src="js/jquery.flot.stack.js"></script>
+<script src="js/jquery.flot.resize.min.js"></script>
+<script src="js/jquery.chosen.min.js"></script>
+<script src="js/jquery.uniform.min.js"></script>
+<script src="js/jquery.cleditor.min.js"></script>
+<script src="js/jquery.noty.js"></script>
+<script src="js/jquery.elfinder.min.js"></script>
+<script src="js/jquery.raty.min.js"></script>
+<script src="js/jquery.iphone.toggle.js"></script>
+<script src="js/jquery.uploadify-3.1.min.js"></script>
+<script src="js/jquery.gritter.min.js"></script>
+<script src="js/jquery.imagesloaded.js"></script>
+<script src="js/jquery.masonry.min.js"></script>
+<script src="js/jquery.knob.modified.js"></script>
+<script src="js/jquery.sparkline.min.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/retina.js"></script>
+<script src="js/custom.js"></script>
+
+</body>
+</html>
