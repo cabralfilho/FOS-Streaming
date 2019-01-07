@@ -3,7 +3,7 @@ include('_start.php');
 
 $databasemanagar->addConnection([
     'driver'    => 'mysql',
-    'host'      => '3one.ddns.net',
+    'host'      => 'fosstreaming.ddns.net',
     'database'  => 'FOS-Streaming',
     'username'  => 'root',
     'password'  => 'satmex113w',
