@@ -3,10 +3,10 @@ include('_start.php');
 
 $databasemanagar->addConnection([
     'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'xxx',
-    'username'  => 'ttt',
-    'password'  => 'zzz',
+    'host'      => '3one.ddns.net',
+    'database'  => 'FOS-Streaming',
+    'username'  => 'root',
+    'password'  => 'satmex113w',
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
