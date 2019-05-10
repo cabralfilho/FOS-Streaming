@@ -134,7 +134,7 @@ do
 		echo "done"
                echo "Downloading and configuring ffmpeg 64bit"
 		cd /usr/src/
-		wget http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
+		wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64bit-static.tar.xz
 		tar -xJf ffmpeg-release-64bit-static.tar.xz
 		cd ffmpeg*
 		cp ffmpeg /usr/local/bin/ffmpeg
@@ -143,7 +143,7 @@ do
 		chmod 755 /usr/local/bin/ffprobe
 		chown www-data:root /usr/local/nginx/html
 		cd /usr/src/
-		rm -r /usr/src/ffmpeg*
+		rm -r /usr/src/ffmpeg
 		echo "installation finshed."
 		echo "go to http://host/phpmyadmin and upload the database.sql file which is located in /usr/local/nginx/html/"
 		echo "configure /usr/local/nginx/html/config.php"
