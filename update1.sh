@@ -1,6 +1,6 @@
 #!/bin/bash
 # Automated installation for Fos-streaming panel - http://fos-streaming.com/
-# Source: git clone https://github.com/zgelici/FOS-Streaming.git
+# Source: git clone https://github.com/cabralfilho/FOS-Streaming.git
 
 echo -n "Updating FOS-Streaming"
 rm -r /usr/src/FOS-Streaming
@@ -8,7 +8,7 @@ cd /usr/local/nginx/html
 mv /usr/local/nginx/html/config.php /tmp/
 rm -r /usr/local/nginx/html/*
 cd /usr/src/
-git clone https://github.com/zgelici/FOS-Streaming.git
+git clone https://github.com/cabralfilho/FOS-Streaming.git
 cd /usr/src/FOS-Streaming/
 mv /usr/src/FOS-Streaming/* /usr/local/nginx/html/
 mv /tmp/config.php /usr/local/nginx/html
