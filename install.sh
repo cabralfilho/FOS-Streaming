@@ -135,7 +135,8 @@ do
                echo "Downloading and configuring ffmpeg 64bit"
 		cd /usr/src/
 		wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-		tar -xJf ffmpeg-release-amd64-static.tar.xz
+		tar -xJf ffmpeg-release-64bit-static.tar.xz		
+		##https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 		cd ffmpeg*
 		cp ffmpeg /usr/local/bin/ffmpeg
 		cp ffprobe /usr/local/bin/ffprobe
